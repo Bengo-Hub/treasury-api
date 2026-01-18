@@ -55,6 +55,7 @@ type PostgresConfig struct {
 	MaxOpenConns    int           `envconfig:"POSTGRES_MAX_OPEN_CONNS" default:"30"`
 	MaxIdleConns    int           `envconfig:"POSTGRES_MAX_IDLE_CONNS" default:"15"`
 	ConnMaxLifetime time.Duration `envconfig:"POSTGRES_CONN_MAX_LIFETIME" default:"45m"`
+	RunMigrations   bool          `envconfig:"POSTGRES_RUN_MIGRATIONS" default:"false"`
 }
 
 type RedisConfig struct {
@@ -97,12 +98,14 @@ type TelemetryConfig struct {
 
 type AuthConfig struct {
 	// Auth Service SSO (JWT) integration
-	ServiceURL         string        `envconfig:"AUTH_SERVICE_URL" default:"https://auth.codevertex.local:4101"`
-	Issuer             string        `envconfig:"AUTH_ISSUER" default:"https://auth.codevertex.local:4101"`
-	Audience           string        `envconfig:"AUTH_AUDIENCE" default:"bengobox"`
-	JWKSUrl            string        `envconfig:"AUTH_JWKS_URL" default:"https://auth.codevertex.local:4101/api/v1/.well-known/jwks.json"`
-	JWKSCacheTTL       time.Duration `envconfig:"AUTH_JWKS_CACHE_TTL" default:"3600s"`
+	ServiceURL          string        `envconfig:"AUTH_SERVICE_URL" default:"https://sso.codevertexitsolutions.com"`
+	Issuer              string        `envconfig:"AUTH_ISSUER" default:"https://sso.codevertexitsolutions.com"`
+	Audience            string        `envconfig:"AUTH_AUDIENCE" default:"bengobox"`
+	JWKSUrl             string        `envconfig:"AUTH_JWKS_URL" default:"https://sso.codevertexitsolutions.com/api/v1/.well-known/jwks.json"`
+	JWKSCacheTTL        time.Duration `envconfig:"AUTH_JWKS_CACHE_TTL" default:"3600s"`
 	JWKSRefreshInterval time.Duration `envconfig:"AUTH_JWKS_REFRESH_INTERVAL" default:"300s"`
+	EnableAPIKeyAuth    bool          `envconfig:"AUTH_ENABLE_API_KEY_AUTH" default:"true"`
+	APIKey              string        `envconfig:"AUTH_API_KEY"` // For service-to-service user sync
 }
 
 // Load gathers configuration from environment variables and optional .env files.
