@@ -9,8 +9,8 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/bengobox/treasury-app/internal/modules/rbac"
-	"github.com/bengobox/treasury-app/internal/services/usersync"
+	"github.com/bengobox/treasury-api/internal/modules/rbac"
+	"github.com/bengobox/treasury-api/internal/services/usersync"
 )
 
 // RBACHandler handles RBAC-related operations.

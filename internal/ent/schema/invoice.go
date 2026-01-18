@@ -41,8 +41,8 @@ func (Invoice) Fields() []ent.Field {
 			Comment("Subtotal amount"),
 		field.Float("tax_amount").
 			GoType(decimal.Decimal{}).
-			Default(0).
-			Comment("Tax amount"),
+			Optional().
+			Comment("Tax amount (defaults to zero)"),
 		field.Float("total_amount").
 			GoType(decimal.Decimal{}).
 			Comment("Total amount"),

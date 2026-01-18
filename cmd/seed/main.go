@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bengobox/treasury-app/internal/config"
-	"github.com/bengobox/treasury-app/internal/ent"
-	"github.com/bengobox/treasury-app/internal/ent/treasurypermission"
-	"github.com/bengobox/treasury-app/internal/ent/treasuryrole"
+	"github.com/bengobox/treasury-api/internal/config"
+	"github.com/bengobox/treasury-api/internal/ent"
+	"github.com/bengobox/treasury-api/internal/ent/treasurypermission"
+	"github.com/bengobox/treasury-api/internal/ent/treasuryrole"
 	"github.com/google/uuid"
 	_ "github.com/jackc/pgx/v5/stdlib"
 

@@ -1518,10 +1518,24 @@ func (m *InvoiceMutation) AddedTaxAmount() (r decimal.Decimal, exists bool) {
 	return *v, true
 }
 
+// ClearTaxAmount clears the value of the "tax_amount" field.
+func (m *InvoiceMutation) ClearTaxAmount() {
+	m.tax_amount = nil
+	m.addtax_amount = nil
+	m.clearedFields[invoice.FieldTaxAmount] = struct{}{}
+}
+
+// TaxAmountCleared returns if the "tax_amount" field was cleared in this mutation.
+func (m *InvoiceMutation) TaxAmountCleared() bool {
+	_, ok := m.clearedFields[invoice.FieldTaxAmount]
+	return ok
+}
+
 // ResetTaxAmount resets all changes to the "tax_amount" field.
 func (m *InvoiceMutation) ResetTaxAmount() {
 	m.tax_amount = nil
 	m.addtax_amount = nil
+	delete(m.clearedFields, invoice.FieldTaxAmount)
 }
 
 // SetTotalAmount sets the "total_amount" field.
@@ -2265,6 +2279,9 @@ func (m *InvoiceMutation) ClearedFields() []string {
 	if m.FieldCleared(invoice.FieldCustomerID) {
 		fields = append(fields, invoice.FieldCustomerID)
 	}
+	if m.FieldCleared(invoice.FieldTaxAmount) {
+		fields = append(fields, invoice.FieldTaxAmount)
+	}
 	if m.FieldCleared(invoice.FieldReferenceID) {
 		fields = append(fields, invoice.FieldReferenceID)
 	}
@@ -2287,6 +2304,9 @@ func (m *InvoiceMutation) ClearField(name string) error {
 	switch name {
 	case invoice.FieldCustomerID:
 		m.ClearCustomerID()
+		return nil
+	case invoice.FieldTaxAmount:
+		m.ClearTaxAmount()
 		return nil
 	case invoice.FieldReferenceID:
 		m.ClearReferenceID()
@@ -2709,10 +2729,24 @@ func (m *LedgerTransactionMutation) AddedDebitAmount() (r decimal.Decimal, exist
 	return *v, true
 }
 
+// ClearDebitAmount clears the value of the "debit_amount" field.
+func (m *LedgerTransactionMutation) ClearDebitAmount() {
+	m.debit_amount = nil
+	m.adddebit_amount = nil
+	m.clearedFields[ledgertransaction.FieldDebitAmount] = struct{}{}
+}
+
+// DebitAmountCleared returns if the "debit_amount" field was cleared in this mutation.
+func (m *LedgerTransactionMutation) DebitAmountCleared() bool {
+	_, ok := m.clearedFields[ledgertransaction.FieldDebitAmount]
+	return ok
+}
+
 // ResetDebitAmount resets all changes to the "debit_amount" field.
 func (m *LedgerTransactionMutation) ResetDebitAmount() {
 	m.debit_amount = nil
 	m.adddebit_amount = nil
+	delete(m.clearedFields, ledgertransaction.FieldDebitAmount)
 }
 
 // SetCreditAmount sets the "credit_amount" field.
@@ -2765,10 +2799,24 @@ func (m *LedgerTransactionMutation) AddedCreditAmount() (r decimal.Decimal, exis
 	return *v, true
 }
 
+// ClearCreditAmount clears the value of the "credit_amount" field.
+func (m *LedgerTransactionMutation) ClearCreditAmount() {
+	m.credit_amount = nil
+	m.addcredit_amount = nil
+	m.clearedFields[ledgertransaction.FieldCreditAmount] = struct{}{}
+}
+
+// CreditAmountCleared returns if the "credit_amount" field was cleared in this mutation.
+func (m *LedgerTransactionMutation) CreditAmountCleared() bool {
+	_, ok := m.clearedFields[ledgertransaction.FieldCreditAmount]
+	return ok
+}
+
 // ResetCreditAmount resets all changes to the "credit_amount" field.
 func (m *LedgerTransactionMutation) ResetCreditAmount() {
 	m.credit_amount = nil
 	m.addcredit_amount = nil
+	delete(m.clearedFields, ledgertransaction.FieldCreditAmount)
 }
 
 // SetCurrency sets the "currency" field.
@@ -2857,10 +2905,24 @@ func (m *LedgerTransactionMutation) AddedExchangeRate() (r decimal.Decimal, exis
 	return *v, true
 }
 
+// ClearExchangeRate clears the value of the "exchange_rate" field.
+func (m *LedgerTransactionMutation) ClearExchangeRate() {
+	m.exchange_rate = nil
+	m.addexchange_rate = nil
+	m.clearedFields[ledgertransaction.FieldExchangeRate] = struct{}{}
+}
+
+// ExchangeRateCleared returns if the "exchange_rate" field was cleared in this mutation.
+func (m *LedgerTransactionMutation) ExchangeRateCleared() bool {
+	_, ok := m.clearedFields[ledgertransaction.FieldExchangeRate]
+	return ok
+}
+
 // ResetExchangeRate resets all changes to the "exchange_rate" field.
 func (m *LedgerTransactionMutation) ResetExchangeRate() {
 	m.exchange_rate = nil
 	m.addexchange_rate = nil
+	delete(m.clearedFields, ledgertransaction.FieldExchangeRate)
 }
 
 // SetReferenceType sets the "reference_type" field.
@@ -3460,6 +3522,15 @@ func (m *LedgerTransactionMutation) ClearedFields() []string {
 	if m.FieldCleared(ledgertransaction.FieldJournalEntryID) {
 		fields = append(fields, ledgertransaction.FieldJournalEntryID)
 	}
+	if m.FieldCleared(ledgertransaction.FieldDebitAmount) {
+		fields = append(fields, ledgertransaction.FieldDebitAmount)
+	}
+	if m.FieldCleared(ledgertransaction.FieldCreditAmount) {
+		fields = append(fields, ledgertransaction.FieldCreditAmount)
+	}
+	if m.FieldCleared(ledgertransaction.FieldExchangeRate) {
+		fields = append(fields, ledgertransaction.FieldExchangeRate)
+	}
 	if m.FieldCleared(ledgertransaction.FieldReferenceType) {
 		fields = append(fields, ledgertransaction.FieldReferenceType)
 	}
@@ -3485,6 +3556,15 @@ func (m *LedgerTransactionMutation) ClearField(name string) error {
 	switch name {
 	case ledgertransaction.FieldJournalEntryID:
 		m.ClearJournalEntryID()
+		return nil
+	case ledgertransaction.FieldDebitAmount:
+		m.ClearDebitAmount()
+		return nil
+	case ledgertransaction.FieldCreditAmount:
+		m.ClearCreditAmount()
+		return nil
+	case ledgertransaction.FieldExchangeRate:
+		m.ClearExchangeRate()
 		return nil
 	case ledgertransaction.FieldReferenceType:
 		m.ClearReferenceType()

@@ -516,6 +516,16 @@ func TaxAmountLTE(v decimal.Decimal) predicate.Invoice {
 	return predicate.Invoice(sql.FieldLTE(FieldTaxAmount, v))
 }
 
+// TaxAmountIsNil applies the IsNil predicate on the "tax_amount" field.
+func TaxAmountIsNil() predicate.Invoice {
+	return predicate.Invoice(sql.FieldIsNull(FieldTaxAmount))
+}
+
+// TaxAmountNotNil applies the NotNil predicate on the "tax_amount" field.
+func TaxAmountNotNil() predicate.Invoice {
+	return predicate.Invoice(sql.FieldNotNull(FieldTaxAmount))
+}
+
 // TotalAmountEQ applies the EQ predicate on the "total_amount" field.
 func TotalAmountEQ(v decimal.Decimal) predicate.Invoice {
 	return predicate.Invoice(sql.FieldEQ(FieldTotalAmount, v))

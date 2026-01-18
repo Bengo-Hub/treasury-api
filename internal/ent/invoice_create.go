@@ -260,10 +260,6 @@ func (_c *InvoiceCreate) defaults() {
 		v := invoice.DefaultInvoiceType
 		_c.mutation.SetInvoiceType(v)
 	}
-	if _, ok := _c.mutation.TaxAmount(); !ok {
-		v := invoice.DefaultTaxAmount
-		_c.mutation.SetTaxAmount(v)
-	}
 	if _, ok := _c.mutation.Currency(); !ok {
 		v := invoice.DefaultCurrency
 		_c.mutation.SetCurrency(v)
@@ -318,9 +314,6 @@ func (_c *InvoiceCreate) check() error {
 	}
 	if _, ok := _c.mutation.Subtotal(); !ok {
 		return &ValidationError{Name: "subtotal", err: errors.New(`ent: missing required field "Invoice.subtotal"`)}
-	}
-	if _, ok := _c.mutation.TaxAmount(); !ok {
-		return &ValidationError{Name: "tax_amount", err: errors.New(`ent: missing required field "Invoice.tax_amount"`)}
 	}
 	if _, ok := _c.mutation.TotalAmount(); !ok {
 		return &ValidationError{Name: "total_amount", err: errors.New(`ent: missing required field "Invoice.total_amount"`)}
@@ -610,6 +603,12 @@ func (u *InvoiceUpsert) UpdateTaxAmount() *InvoiceUpsert {
 // AddTaxAmount adds v to the "tax_amount" field.
 func (u *InvoiceUpsert) AddTaxAmount(v decimal.Decimal) *InvoiceUpsert {
 	u.Add(invoice.FieldTaxAmount, v)
+	return u
+}
+
+// ClearTaxAmount clears the value of the "tax_amount" field.
+func (u *InvoiceUpsert) ClearTaxAmount() *InvoiceUpsert {
+	u.SetNull(invoice.FieldTaxAmount)
 	return u
 }
 
@@ -908,6 +907,13 @@ func (u *InvoiceUpsertOne) AddTaxAmount(v decimal.Decimal) *InvoiceUpsertOne {
 func (u *InvoiceUpsertOne) UpdateTaxAmount() *InvoiceUpsertOne {
 	return u.Update(func(s *InvoiceUpsert) {
 		s.UpdateTaxAmount()
+	})
+}
+
+// ClearTaxAmount clears the value of the "tax_amount" field.
+func (u *InvoiceUpsertOne) ClearTaxAmount() *InvoiceUpsertOne {
+	return u.Update(func(s *InvoiceUpsert) {
+		s.ClearTaxAmount()
 	})
 }
 
@@ -1392,6 +1398,13 @@ func (u *InvoiceUpsertBulk) AddTaxAmount(v decimal.Decimal) *InvoiceUpsertBulk {
 func (u *InvoiceUpsertBulk) UpdateTaxAmount() *InvoiceUpsertBulk {
 	return u.Update(func(s *InvoiceUpsert) {
 		s.UpdateTaxAmount()
+	})
+}
+
+// ClearTaxAmount clears the value of the "tax_amount" field.
+func (u *InvoiceUpsertBulk) ClearTaxAmount() *InvoiceUpsertBulk {
+	return u.Update(func(s *InvoiceUpsert) {
+		s.ClearTaxAmount()
 	})
 }
 

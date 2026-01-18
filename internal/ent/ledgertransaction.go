@@ -27,13 +27,13 @@ type LedgerTransaction struct {
 	AccountID uuid.UUID `json:"account_id,omitempty"`
 	// Journal entry identifier
 	JournalEntryID uuid.UUID `json:"journal_entry_id,omitempty"`
-	// Debit amount
+	// Debit amount (defaults to zero)
 	DebitAmount decimal.Decimal `json:"debit_amount,omitempty"`
-	// Credit amount
+	// Credit amount (defaults to zero)
 	CreditAmount decimal.Decimal `json:"credit_amount,omitempty"`
 	// ISO currency code
 	Currency string `json:"currency,omitempty"`
-	// FX rate for multi-currency
+	// FX rate for multi-currency (defaults to 1.0)
 	ExchangeRate decimal.Decimal `json:"exchange_rate,omitempty"`
 	// Reference entity type (invoice, bill, payment)
 	ReferenceType string `json:"reference_type,omitempty"`

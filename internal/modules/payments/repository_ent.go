@@ -7,10 +7,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 
-	"github.com/bengobox/treasury-app/internal/ent"
-	"github.com/bengobox/treasury-app/internal/ent/paymentintent"
+	"github.com/bengobox/treasury-api/internal/ent"
+	"github.com/bengobox/treasury-api/internal/ent/paymentintent"
 )
 
 // EntRepository implements the Repository interface using Ent ORM.
@@ -29,8 +28,6 @@ func (r *EntRepository) CreatePaymentIntent(ctx context.Context, tenantID uuid.U
 		return errors.New("payment intent cannot be nil")
 	}
 
-	amount, _ := intent.Amount.Float64()
-
 	builder := r.client.PaymentIntent.Create().
 		SetID(intent.ID).
 		SetTenantID(tenantID).
@@ -38,7 +35,7 @@ func (r *EntRepository) CreatePaymentIntent(ctx context.Context, tenantID uuid.U
 		SetReferenceType(intent.ReferenceType).
 		SetPaymentMethod(intent.PaymentMethod).
 		SetCurrency(intent.Currency).
-		SetAmount(amount).
+		SetAmount(intent.Amount).
 		SetStatus(intent.Status).
 		SetMetadata(intent.Metadata)
 
@@ -153,21 +150,22 @@ func mapEntPaymentIntent(entIntent *ent.PaymentIntent) *PaymentIntent {
 		ReferenceType: entIntent.ReferenceType,
 		PaymentMethod: entIntent.PaymentMethod,
 		Currency:      entIntent.Currency,
-		Amount:        decimal.NewFromFloat(entIntent.Amount),
+		Amount:        entIntent.Amount,
 		Status:        entIntent.Status,
 		Metadata:      entIntent.Metadata,
 		CreatedAt:     entIntent.CreatedAt,
 		UpdatedAt:     entIntent.UpdatedAt,
 	}
 
-	if entIntent.CustomerID != nil {
-		intent.CustomerID = entIntent.CustomerID
+	// Optional fields - check for zero values
+	if entIntent.CustomerID != uuid.Nil {
+		intent.CustomerID = &entIntent.CustomerID
 	}
-	if entIntent.Description != nil && *entIntent.Description != "" {
-		intent.Description = entIntent.Description
+	if entIntent.Description != "" {
+		intent.Description = &entIntent.Description
 	}
-	if entIntent.ExpiresAt != nil {
-		intent.ExpiresAt = entIntent.ExpiresAt
+	if !entIntent.ExpiresAt.IsZero() {
+		intent.ExpiresAt = &entIntent.ExpiresAt
 	}
 
 	return intent

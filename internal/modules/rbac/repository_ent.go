@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/bengobox/treasury-app/internal/ent"
-	"github.com/bengobox/treasury-app/internal/ent/rolepermission"
-	"github.com/bengobox/treasury-app/internal/ent/treasurypermission"
-	"github.com/bengobox/treasury-app/internal/ent/treasuryrole"
-	"github.com/bengobox/treasury-app/internal/ent/treasuryuser"
-	"github.com/bengobox/treasury-app/internal/ent/userroleassignment"
+	"github.com/bengobox/treasury-api/internal/ent"
+	"github.com/bengobox/treasury-api/internal/ent/rolepermission"
+	"github.com/bengobox/treasury-api/internal/ent/treasurypermission"
+	"github.com/bengobox/treasury-api/internal/ent/treasuryrole"
+	"github.com/bengobox/treasury-api/internal/ent/treasuryuser"
+	"github.com/bengobox/treasury-api/internal/ent/userroleassignment"
 	"github.com/google/uuid"
 )
 
@@ -356,12 +356,11 @@ func (r *EntRepository) RevokeRoleFromUser(ctx context.Context, tenantID uuid.UU
 
 // GetUserRoles retrieves all roles assigned to a user.
 func (r *EntRepository) GetUserRoles(ctx context.Context, tenantID uuid.UUID, userID uuid.UUID) ([]*TreasuryRole, error) {
-	entRoles, err := r.client.TreasuryUser.Query().
+	entRoles, err := r.client.UserRoleAssignment.Query().
 		Where(
-			treasuryuser.ID(userID),
-			treasuryuser.TenantID(tenantID),
+			userroleassignment.TenantID(tenantID),
+			userroleassignment.UserID(userID),
 		).
-		QueryUserAssignments().
 		QueryRole().
 		All(ctx)
 	if err != nil {
@@ -443,8 +442,8 @@ func mapEntUser(entUser *ent.TreasuryUser) *TreasuryUser {
 		UpdatedAt:         entUser.UpdatedAt,
 	}
 
-	if entUser.LastSyncAt != nil {
-		user.LastSyncAt = entUser.LastSyncAt
+	if !entUser.LastSyncAt.IsZero() {
+		user.LastSyncAt = &entUser.LastSyncAt
 	}
 
 	return user
@@ -498,8 +497,8 @@ func mapEntAssignment(entAssignment *ent.UserRoleAssignment) *UserRoleAssignment
 		AssignedAt: entAssignment.AssignedAt,
 	}
 
-	if entAssignment.ExpiresAt != nil {
-		assignment.ExpiresAt = entAssignment.ExpiresAt
+	if !entAssignment.ExpiresAt.IsZero() {
+		assignment.ExpiresAt = &entAssignment.ExpiresAt
 	}
 
 	return assignment

@@ -9,7 +9,7 @@ import (
 	"github.com/nats-io/nats.go"
 	"go.uber.org/zap"
 
-	"github.com/bengobox/treasury-app/internal/modules/rbac"
+	"github.com/bengobox/treasury-api/internal/modules/rbac"
 )
 
 // UserEventConsumer handles auth-service user events.
@@ -96,8 +96,22 @@ func (c *UserEventConsumer) ConsumeUserEvents(ctx context.Context, js nats.JetSt
 			return
 		}
 
+		userID, err := uuid.Parse(event.UserID)
+		if err != nil {
+			c.logger.Error("invalid user_id in updated event", zap.Error(err))
+			msg.Nak()
+			return
+		}
+
+		tenantID, err := uuid.Parse(event.TenantID)
+		if err != nil {
+			c.logger.Error("invalid tenant_id in updated event", zap.Error(err))
+			msg.Nak()
+			return
+		}
+
 		// Sync user in treasury service
-		if _, err := c.rbacService.SyncUser(ctx, event.TenantID, event.UserID, event.Email); err != nil {
+		if _, err := c.rbacService.SyncUser(ctx, tenantID, userID, event.Email); err != nil {
 			c.logger.Error("failed to sync user from updated event", zap.Error(err))
 			msg.Nak()
 			return

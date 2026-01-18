@@ -7,7 +7,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 )
 
 const (
@@ -90,8 +89,6 @@ var (
 	InvoiceNumberValidator func(string) error
 	// DefaultInvoiceType holds the default value on creation for the "invoice_type" field.
 	DefaultInvoiceType string
-	// DefaultTaxAmount holds the default value on creation for the "tax_amount" field.
-	DefaultTaxAmount decimal.Decimal
 	// DefaultCurrency holds the default value on creation for the "currency" field.
 	DefaultCurrency string
 	// DefaultStatus holds the default value on creation for the "status" field.

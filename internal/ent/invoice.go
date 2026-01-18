@@ -34,7 +34,7 @@ type Invoice struct {
 	DueDate time.Time `json:"due_date,omitempty"`
 	// Subtotal amount
 	Subtotal decimal.Decimal `json:"subtotal,omitempty"`
-	// Tax amount
+	// Tax amount (defaults to zero)
 	TaxAmount decimal.Decimal `json:"tax_amount,omitempty"`
 	// Total amount
 	TotalAmount decimal.Decimal `json:"total_amount,omitempty"`

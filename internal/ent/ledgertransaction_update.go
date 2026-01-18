@@ -100,6 +100,12 @@ func (_u *LedgerTransactionUpdate) AddDebitAmount(v decimal.Decimal) *LedgerTran
 	return _u
 }
 
+// ClearDebitAmount clears the value of the "debit_amount" field.
+func (_u *LedgerTransactionUpdate) ClearDebitAmount() *LedgerTransactionUpdate {
+	_u.mutation.ClearDebitAmount()
+	return _u
+}
+
 // SetCreditAmount sets the "credit_amount" field.
 func (_u *LedgerTransactionUpdate) SetCreditAmount(v decimal.Decimal) *LedgerTransactionUpdate {
 	_u.mutation.ResetCreditAmount()
@@ -118,6 +124,12 @@ func (_u *LedgerTransactionUpdate) SetNillableCreditAmount(v *decimal.Decimal) *
 // AddCreditAmount adds value to the "credit_amount" field.
 func (_u *LedgerTransactionUpdate) AddCreditAmount(v decimal.Decimal) *LedgerTransactionUpdate {
 	_u.mutation.AddCreditAmount(v)
+	return _u
+}
+
+// ClearCreditAmount clears the value of the "credit_amount" field.
+func (_u *LedgerTransactionUpdate) ClearCreditAmount() *LedgerTransactionUpdate {
+	_u.mutation.ClearCreditAmount()
 	return _u
 }
 
@@ -153,6 +165,12 @@ func (_u *LedgerTransactionUpdate) SetNillableExchangeRate(v *decimal.Decimal) *
 // AddExchangeRate adds value to the "exchange_rate" field.
 func (_u *LedgerTransactionUpdate) AddExchangeRate(v decimal.Decimal) *LedgerTransactionUpdate {
 	_u.mutation.AddExchangeRate(v)
+	return _u
+}
+
+// ClearExchangeRate clears the value of the "exchange_rate" field.
+func (_u *LedgerTransactionUpdate) ClearExchangeRate() *LedgerTransactionUpdate {
+	_u.mutation.ClearExchangeRate()
 	return _u
 }
 
@@ -314,11 +332,17 @@ func (_u *LedgerTransactionUpdate) sqlSave(ctx context.Context) (_node int, err 
 	if value, ok := _u.mutation.AddedDebitAmount(); ok {
 		_spec.AddField(ledgertransaction.FieldDebitAmount, field.TypeFloat64, value)
 	}
+	if _u.mutation.DebitAmountCleared() {
+		_spec.ClearField(ledgertransaction.FieldDebitAmount, field.TypeFloat64)
+	}
 	if value, ok := _u.mutation.CreditAmount(); ok {
 		_spec.SetField(ledgertransaction.FieldCreditAmount, field.TypeFloat64, value)
 	}
 	if value, ok := _u.mutation.AddedCreditAmount(); ok {
 		_spec.AddField(ledgertransaction.FieldCreditAmount, field.TypeFloat64, value)
+	}
+	if _u.mutation.CreditAmountCleared() {
+		_spec.ClearField(ledgertransaction.FieldCreditAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.Currency(); ok {
 		_spec.SetField(ledgertransaction.FieldCurrency, field.TypeString, value)
@@ -328,6 +352,9 @@ func (_u *LedgerTransactionUpdate) sqlSave(ctx context.Context) (_node int, err 
 	}
 	if value, ok := _u.mutation.AddedExchangeRate(); ok {
 		_spec.AddField(ledgertransaction.FieldExchangeRate, field.TypeFloat64, value)
+	}
+	if _u.mutation.ExchangeRateCleared() {
+		_spec.ClearField(ledgertransaction.FieldExchangeRate, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.ReferenceType(); ok {
 		_spec.SetField(ledgertransaction.FieldReferenceType, field.TypeString, value)
@@ -471,6 +498,12 @@ func (_u *LedgerTransactionUpdateOne) AddDebitAmount(v decimal.Decimal) *LedgerT
 	return _u
 }
 
+// ClearDebitAmount clears the value of the "debit_amount" field.
+func (_u *LedgerTransactionUpdateOne) ClearDebitAmount() *LedgerTransactionUpdateOne {
+	_u.mutation.ClearDebitAmount()
+	return _u
+}
+
 // SetCreditAmount sets the "credit_amount" field.
 func (_u *LedgerTransactionUpdateOne) SetCreditAmount(v decimal.Decimal) *LedgerTransactionUpdateOne {
 	_u.mutation.ResetCreditAmount()
@@ -489,6 +522,12 @@ func (_u *LedgerTransactionUpdateOne) SetNillableCreditAmount(v *decimal.Decimal
 // AddCreditAmount adds value to the "credit_amount" field.
 func (_u *LedgerTransactionUpdateOne) AddCreditAmount(v decimal.Decimal) *LedgerTransactionUpdateOne {
 	_u.mutation.AddCreditAmount(v)
+	return _u
+}
+
+// ClearCreditAmount clears the value of the "credit_amount" field.
+func (_u *LedgerTransactionUpdateOne) ClearCreditAmount() *LedgerTransactionUpdateOne {
+	_u.mutation.ClearCreditAmount()
 	return _u
 }
 
@@ -524,6 +563,12 @@ func (_u *LedgerTransactionUpdateOne) SetNillableExchangeRate(v *decimal.Decimal
 // AddExchangeRate adds value to the "exchange_rate" field.
 func (_u *LedgerTransactionUpdateOne) AddExchangeRate(v decimal.Decimal) *LedgerTransactionUpdateOne {
 	_u.mutation.AddExchangeRate(v)
+	return _u
+}
+
+// ClearExchangeRate clears the value of the "exchange_rate" field.
+func (_u *LedgerTransactionUpdateOne) ClearExchangeRate() *LedgerTransactionUpdateOne {
+	_u.mutation.ClearExchangeRate()
 	return _u
 }
 
@@ -715,11 +760,17 @@ func (_u *LedgerTransactionUpdateOne) sqlSave(ctx context.Context) (_node *Ledge
 	if value, ok := _u.mutation.AddedDebitAmount(); ok {
 		_spec.AddField(ledgertransaction.FieldDebitAmount, field.TypeFloat64, value)
 	}
+	if _u.mutation.DebitAmountCleared() {
+		_spec.ClearField(ledgertransaction.FieldDebitAmount, field.TypeFloat64)
+	}
 	if value, ok := _u.mutation.CreditAmount(); ok {
 		_spec.SetField(ledgertransaction.FieldCreditAmount, field.TypeFloat64, value)
 	}
 	if value, ok := _u.mutation.AddedCreditAmount(); ok {
 		_spec.AddField(ledgertransaction.FieldCreditAmount, field.TypeFloat64, value)
+	}
+	if _u.mutation.CreditAmountCleared() {
+		_spec.ClearField(ledgertransaction.FieldCreditAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.Currency(); ok {
 		_spec.SetField(ledgertransaction.FieldCurrency, field.TypeString, value)
@@ -729,6 +780,9 @@ func (_u *LedgerTransactionUpdateOne) sqlSave(ctx context.Context) (_node *Ledge
 	}
 	if value, ok := _u.mutation.AddedExchangeRate(); ok {
 		_spec.AddField(ledgertransaction.FieldExchangeRate, field.TypeFloat64, value)
+	}
+	if _u.mutation.ExchangeRateCleared() {
+		_spec.ClearField(ledgertransaction.FieldExchangeRate, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.ReferenceType(); ok {
 		_spec.SetField(ledgertransaction.FieldReferenceType, field.TypeString, value)

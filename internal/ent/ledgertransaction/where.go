@@ -267,6 +267,16 @@ func DebitAmountLTE(v decimal.Decimal) predicate.LedgerTransaction {
 	return predicate.LedgerTransaction(sql.FieldLTE(FieldDebitAmount, v))
 }
 
+// DebitAmountIsNil applies the IsNil predicate on the "debit_amount" field.
+func DebitAmountIsNil() predicate.LedgerTransaction {
+	return predicate.LedgerTransaction(sql.FieldIsNull(FieldDebitAmount))
+}
+
+// DebitAmountNotNil applies the NotNil predicate on the "debit_amount" field.
+func DebitAmountNotNil() predicate.LedgerTransaction {
+	return predicate.LedgerTransaction(sql.FieldNotNull(FieldDebitAmount))
+}
+
 // CreditAmountEQ applies the EQ predicate on the "credit_amount" field.
 func CreditAmountEQ(v decimal.Decimal) predicate.LedgerTransaction {
 	return predicate.LedgerTransaction(sql.FieldEQ(FieldCreditAmount, v))
@@ -305,6 +315,16 @@ func CreditAmountLT(v decimal.Decimal) predicate.LedgerTransaction {
 // CreditAmountLTE applies the LTE predicate on the "credit_amount" field.
 func CreditAmountLTE(v decimal.Decimal) predicate.LedgerTransaction {
 	return predicate.LedgerTransaction(sql.FieldLTE(FieldCreditAmount, v))
+}
+
+// CreditAmountIsNil applies the IsNil predicate on the "credit_amount" field.
+func CreditAmountIsNil() predicate.LedgerTransaction {
+	return predicate.LedgerTransaction(sql.FieldIsNull(FieldCreditAmount))
+}
+
+// CreditAmountNotNil applies the NotNil predicate on the "credit_amount" field.
+func CreditAmountNotNil() predicate.LedgerTransaction {
+	return predicate.LedgerTransaction(sql.FieldNotNull(FieldCreditAmount))
 }
 
 // CurrencyEQ applies the EQ predicate on the "currency" field.
@@ -410,6 +430,16 @@ func ExchangeRateLT(v decimal.Decimal) predicate.LedgerTransaction {
 // ExchangeRateLTE applies the LTE predicate on the "exchange_rate" field.
 func ExchangeRateLTE(v decimal.Decimal) predicate.LedgerTransaction {
 	return predicate.LedgerTransaction(sql.FieldLTE(FieldExchangeRate, v))
+}
+
+// ExchangeRateIsNil applies the IsNil predicate on the "exchange_rate" field.
+func ExchangeRateIsNil() predicate.LedgerTransaction {
+	return predicate.LedgerTransaction(sql.FieldIsNull(FieldExchangeRate))
+}
+
+// ExchangeRateNotNil applies the NotNil predicate on the "exchange_rate" field.
+func ExchangeRateNotNil() predicate.LedgerTransaction {
+	return predicate.LedgerTransaction(sql.FieldNotNull(FieldExchangeRate))
 }
 
 // ReferenceTypeEQ applies the EQ predicate on the "reference_type" field.

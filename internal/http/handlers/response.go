@@ -12,3 +12,7 @@ func respondJSON(w http.ResponseWriter, status int, payload any) {
 		_, _ = w.Write([]byte("{\"status\":\"serialization_error\"}"))
 	}
 }
+
+func respondError(w http.ResponseWriter, status int, message string) {
+	respondJSON(w, status, map[string]string{"error": message})
+}

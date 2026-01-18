@@ -60,7 +60,8 @@ info "Running Trivy filesystem scan"
 trivy fs . --exit-code "$TRIVY_ECODE" --format table || true
 
 info "Building Docker image"
-DOCKER_BUILDKIT=1 docker build . -t "${IMAGE_REPO}:${GIT_COMMIT_ID}"
+# Build from service directory - go.mod uses remote replace directive for auth-client
+DOCKER_BUILDKIT=1 docker build -t "${IMAGE_REPO}:${GIT_COMMIT_ID}" .
 success "Docker build complete"
 
 if [[ ${DEPLOY} != "true" ]]; then

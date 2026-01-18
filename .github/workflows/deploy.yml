@@ -2,7 +2,7 @@ name: Build and Deploy Treasury Service
 
 on:
   push:
-    branches: [ staging ]
+    branches: [ main ]
 
 jobs:
   deploy:

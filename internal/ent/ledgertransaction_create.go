@@ -230,21 +230,9 @@ func (_c *LedgerTransactionCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_c *LedgerTransactionCreate) defaults() {
-	if _, ok := _c.mutation.DebitAmount(); !ok {
-		v := ledgertransaction.DefaultDebitAmount
-		_c.mutation.SetDebitAmount(v)
-	}
-	if _, ok := _c.mutation.CreditAmount(); !ok {
-		v := ledgertransaction.DefaultCreditAmount
-		_c.mutation.SetCreditAmount(v)
-	}
 	if _, ok := _c.mutation.Currency(); !ok {
 		v := ledgertransaction.DefaultCurrency
 		_c.mutation.SetCurrency(v)
-	}
-	if _, ok := _c.mutation.ExchangeRate(); !ok {
-		v := ledgertransaction.DefaultExchangeRate
-		_c.mutation.SetExchangeRate(v)
 	}
 	if _, ok := _c.mutation.Metadata(); !ok {
 		v := ledgertransaction.DefaultMetadata
@@ -268,17 +256,8 @@ func (_c *LedgerTransactionCreate) check() error {
 	if _, ok := _c.mutation.AccountID(); !ok {
 		return &ValidationError{Name: "account_id", err: errors.New(`ent: missing required field "LedgerTransaction.account_id"`)}
 	}
-	if _, ok := _c.mutation.DebitAmount(); !ok {
-		return &ValidationError{Name: "debit_amount", err: errors.New(`ent: missing required field "LedgerTransaction.debit_amount"`)}
-	}
-	if _, ok := _c.mutation.CreditAmount(); !ok {
-		return &ValidationError{Name: "credit_amount", err: errors.New(`ent: missing required field "LedgerTransaction.credit_amount"`)}
-	}
 	if _, ok := _c.mutation.Currency(); !ok {
 		return &ValidationError{Name: "currency", err: errors.New(`ent: missing required field "LedgerTransaction.currency"`)}
-	}
-	if _, ok := _c.mutation.ExchangeRate(); !ok {
-		return &ValidationError{Name: "exchange_rate", err: errors.New(`ent: missing required field "LedgerTransaction.exchange_rate"`)}
 	}
 	if _, ok := _c.mutation.TransactionDate(); !ok {
 		return &ValidationError{Name: "transaction_date", err: errors.New(`ent: missing required field "LedgerTransaction.transaction_date"`)}
@@ -505,6 +484,12 @@ func (u *LedgerTransactionUpsert) AddDebitAmount(v decimal.Decimal) *LedgerTrans
 	return u
 }
 
+// ClearDebitAmount clears the value of the "debit_amount" field.
+func (u *LedgerTransactionUpsert) ClearDebitAmount() *LedgerTransactionUpsert {
+	u.SetNull(ledgertransaction.FieldDebitAmount)
+	return u
+}
+
 // SetCreditAmount sets the "credit_amount" field.
 func (u *LedgerTransactionUpsert) SetCreditAmount(v decimal.Decimal) *LedgerTransactionUpsert {
 	u.Set(ledgertransaction.FieldCreditAmount, v)
@@ -520,6 +505,12 @@ func (u *LedgerTransactionUpsert) UpdateCreditAmount() *LedgerTransactionUpsert 
 // AddCreditAmount adds v to the "credit_amount" field.
 func (u *LedgerTransactionUpsert) AddCreditAmount(v decimal.Decimal) *LedgerTransactionUpsert {
 	u.Add(ledgertransaction.FieldCreditAmount, v)
+	return u
+}
+
+// ClearCreditAmount clears the value of the "credit_amount" field.
+func (u *LedgerTransactionUpsert) ClearCreditAmount() *LedgerTransactionUpsert {
+	u.SetNull(ledgertransaction.FieldCreditAmount)
 	return u
 }
 
@@ -550,6 +541,12 @@ func (u *LedgerTransactionUpsert) UpdateExchangeRate() *LedgerTransactionUpsert 
 // AddExchangeRate adds v to the "exchange_rate" field.
 func (u *LedgerTransactionUpsert) AddExchangeRate(v decimal.Decimal) *LedgerTransactionUpsert {
 	u.Add(ledgertransaction.FieldExchangeRate, v)
+	return u
+}
+
+// ClearExchangeRate clears the value of the "exchange_rate" field.
+func (u *LedgerTransactionUpsert) ClearExchangeRate() *LedgerTransactionUpsert {
+	u.SetNull(ledgertransaction.FieldExchangeRate)
 	return u
 }
 
@@ -752,6 +749,13 @@ func (u *LedgerTransactionUpsertOne) UpdateDebitAmount() *LedgerTransactionUpser
 	})
 }
 
+// ClearDebitAmount clears the value of the "debit_amount" field.
+func (u *LedgerTransactionUpsertOne) ClearDebitAmount() *LedgerTransactionUpsertOne {
+	return u.Update(func(s *LedgerTransactionUpsert) {
+		s.ClearDebitAmount()
+	})
+}
+
 // SetCreditAmount sets the "credit_amount" field.
 func (u *LedgerTransactionUpsertOne) SetCreditAmount(v decimal.Decimal) *LedgerTransactionUpsertOne {
 	return u.Update(func(s *LedgerTransactionUpsert) {
@@ -770,6 +774,13 @@ func (u *LedgerTransactionUpsertOne) AddCreditAmount(v decimal.Decimal) *LedgerT
 func (u *LedgerTransactionUpsertOne) UpdateCreditAmount() *LedgerTransactionUpsertOne {
 	return u.Update(func(s *LedgerTransactionUpsert) {
 		s.UpdateCreditAmount()
+	})
+}
+
+// ClearCreditAmount clears the value of the "credit_amount" field.
+func (u *LedgerTransactionUpsertOne) ClearCreditAmount() *LedgerTransactionUpsertOne {
+	return u.Update(func(s *LedgerTransactionUpsert) {
+		s.ClearCreditAmount()
 	})
 }
 
@@ -805,6 +816,13 @@ func (u *LedgerTransactionUpsertOne) AddExchangeRate(v decimal.Decimal) *LedgerT
 func (u *LedgerTransactionUpsertOne) UpdateExchangeRate() *LedgerTransactionUpsertOne {
 	return u.Update(func(s *LedgerTransactionUpsert) {
 		s.UpdateExchangeRate()
+	})
+}
+
+// ClearExchangeRate clears the value of the "exchange_rate" field.
+func (u *LedgerTransactionUpsertOne) ClearExchangeRate() *LedgerTransactionUpsertOne {
+	return u.Update(func(s *LedgerTransactionUpsert) {
+		s.ClearExchangeRate()
 	})
 }
 
@@ -1187,6 +1205,13 @@ func (u *LedgerTransactionUpsertBulk) UpdateDebitAmount() *LedgerTransactionUpse
 	})
 }
 
+// ClearDebitAmount clears the value of the "debit_amount" field.
+func (u *LedgerTransactionUpsertBulk) ClearDebitAmount() *LedgerTransactionUpsertBulk {
+	return u.Update(func(s *LedgerTransactionUpsert) {
+		s.ClearDebitAmount()
+	})
+}
+
 // SetCreditAmount sets the "credit_amount" field.
 func (u *LedgerTransactionUpsertBulk) SetCreditAmount(v decimal.Decimal) *LedgerTransactionUpsertBulk {
 	return u.Update(func(s *LedgerTransactionUpsert) {
@@ -1205,6 +1230,13 @@ func (u *LedgerTransactionUpsertBulk) AddCreditAmount(v decimal.Decimal) *Ledger
 func (u *LedgerTransactionUpsertBulk) UpdateCreditAmount() *LedgerTransactionUpsertBulk {
 	return u.Update(func(s *LedgerTransactionUpsert) {
 		s.UpdateCreditAmount()
+	})
+}
+
+// ClearCreditAmount clears the value of the "credit_amount" field.
+func (u *LedgerTransactionUpsertBulk) ClearCreditAmount() *LedgerTransactionUpsertBulk {
+	return u.Update(func(s *LedgerTransactionUpsert) {
+		s.ClearCreditAmount()
 	})
 }
 
@@ -1240,6 +1272,13 @@ func (u *LedgerTransactionUpsertBulk) AddExchangeRate(v decimal.Decimal) *Ledger
 func (u *LedgerTransactionUpsertBulk) UpdateExchangeRate() *LedgerTransactionUpsertBulk {
 	return u.Update(func(s *LedgerTransactionUpsert) {
 		s.UpdateExchangeRate()
+	})
+}
+
+// ClearExchangeRate clears the value of the "exchange_rate" field.
+func (u *LedgerTransactionUpsertBulk) ClearExchangeRate() *LedgerTransactionUpsertBulk {
+	return u.Update(func(s *LedgerTransactionUpsert) {
+		s.ClearExchangeRate()
 	})
 }
 

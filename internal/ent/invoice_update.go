@@ -162,6 +162,12 @@ func (_u *InvoiceUpdate) AddTaxAmount(v decimal.Decimal) *InvoiceUpdate {
 	return _u
 }
 
+// ClearTaxAmount clears the value of the "tax_amount" field.
+func (_u *InvoiceUpdate) ClearTaxAmount() *InvoiceUpdate {
+	_u.mutation.ClearTaxAmount()
+	return _u
+}
+
 // SetTotalAmount sets the "total_amount" field.
 func (_u *InvoiceUpdate) SetTotalAmount(v decimal.Decimal) *InvoiceUpdate {
 	_u.mutation.ResetTotalAmount()
@@ -373,6 +379,9 @@ func (_u *InvoiceUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.AddedTaxAmount(); ok {
 		_spec.AddField(invoice.FieldTaxAmount, field.TypeFloat64, value)
 	}
+	if _u.mutation.TaxAmountCleared() {
+		_spec.ClearField(invoice.FieldTaxAmount, field.TypeFloat64)
+	}
 	if value, ok := _u.mutation.TotalAmount(); ok {
 		_spec.SetField(invoice.FieldTotalAmount, field.TypeFloat64, value)
 	}
@@ -555,6 +564,12 @@ func (_u *InvoiceUpdateOne) SetNillableTaxAmount(v *decimal.Decimal) *InvoiceUpd
 // AddTaxAmount adds value to the "tax_amount" field.
 func (_u *InvoiceUpdateOne) AddTaxAmount(v decimal.Decimal) *InvoiceUpdateOne {
 	_u.mutation.AddTaxAmount(v)
+	return _u
+}
+
+// ClearTaxAmount clears the value of the "tax_amount" field.
+func (_u *InvoiceUpdateOne) ClearTaxAmount() *InvoiceUpdateOne {
+	_u.mutation.ClearTaxAmount()
 	return _u
 }
 
@@ -798,6 +813,9 @@ func (_u *InvoiceUpdateOne) sqlSave(ctx context.Context) (_node *Invoice, err er
 	}
 	if value, ok := _u.mutation.AddedTaxAmount(); ok {
 		_spec.AddField(invoice.FieldTaxAmount, field.TypeFloat64, value)
+	}
+	if _u.mutation.TaxAmountCleared() {
+		_spec.ClearField(invoice.FieldTaxAmount, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.TotalAmount(); ok {
 		_spec.SetField(invoice.FieldTotalAmount, field.TypeFloat64, value)

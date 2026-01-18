@@ -8,7 +8,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 )
 
 const (
@@ -84,14 +83,8 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// DefaultDebitAmount holds the default value on creation for the "debit_amount" field.
-	DefaultDebitAmount decimal.Decimal
-	// DefaultCreditAmount holds the default value on creation for the "credit_amount" field.
-	DefaultCreditAmount decimal.Decimal
 	// DefaultCurrency holds the default value on creation for the "currency" field.
 	DefaultCurrency string
-	// DefaultExchangeRate holds the default value on creation for the "exchange_rate" field.
-	DefaultExchangeRate decimal.Decimal
 	// DefaultMetadata holds the default value on creation for the "metadata" field.
 	DefaultMetadata map[string]interface{}
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.

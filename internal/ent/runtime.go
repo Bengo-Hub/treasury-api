@@ -17,7 +17,6 @@ import (
 	"github.com/bengobox/treasury-api/internal/ent/treasuryuser"
 	"github.com/bengobox/treasury-api/internal/ent/userroleassignment"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 )
 
 // The init function reads all schema descriptors with runtime code
@@ -70,10 +69,6 @@ func init() {
 	invoiceDescInvoiceType := invoiceFields[4].Descriptor()
 	// invoice.DefaultInvoiceType holds the default value on creation for the invoice_type field.
 	invoice.DefaultInvoiceType = invoiceDescInvoiceType.Default.(string)
-	// invoiceDescTaxAmount is the schema descriptor for tax_amount field.
-	invoiceDescTaxAmount := invoiceFields[8].Descriptor()
-	// invoice.DefaultTaxAmount holds the default value on creation for the tax_amount field.
-	invoice.DefaultTaxAmount = decimal.Decimal(invoiceDescTaxAmount.Default.(float64))
 	// invoiceDescCurrency is the schema descriptor for currency field.
 	invoiceDescCurrency := invoiceFields[10].Descriptor()
 	// invoice.DefaultCurrency holds the default value on creation for the currency field.
@@ -106,22 +101,10 @@ func init() {
 	invoice.DefaultID = invoiceDescID.Default.(func() uuid.UUID)
 	ledgertransactionFields := schema.LedgerTransaction{}.Fields()
 	_ = ledgertransactionFields
-	// ledgertransactionDescDebitAmount is the schema descriptor for debit_amount field.
-	ledgertransactionDescDebitAmount := ledgertransactionFields[4].Descriptor()
-	// ledgertransaction.DefaultDebitAmount holds the default value on creation for the debit_amount field.
-	ledgertransaction.DefaultDebitAmount = decimal.Decimal(ledgertransactionDescDebitAmount.Default.(float64))
-	// ledgertransactionDescCreditAmount is the schema descriptor for credit_amount field.
-	ledgertransactionDescCreditAmount := ledgertransactionFields[5].Descriptor()
-	// ledgertransaction.DefaultCreditAmount holds the default value on creation for the credit_amount field.
-	ledgertransaction.DefaultCreditAmount = decimal.Decimal(ledgertransactionDescCreditAmount.Default.(float64))
 	// ledgertransactionDescCurrency is the schema descriptor for currency field.
 	ledgertransactionDescCurrency := ledgertransactionFields[6].Descriptor()
 	// ledgertransaction.DefaultCurrency holds the default value on creation for the currency field.
 	ledgertransaction.DefaultCurrency = ledgertransactionDescCurrency.Default.(string)
-	// ledgertransactionDescExchangeRate is the schema descriptor for exchange_rate field.
-	ledgertransactionDescExchangeRate := ledgertransactionFields[7].Descriptor()
-	// ledgertransaction.DefaultExchangeRate holds the default value on creation for the exchange_rate field.
-	ledgertransaction.DefaultExchangeRate = decimal.Decimal(ledgertransactionDescExchangeRate.Default.(float64))
 	// ledgertransactionDescMetadata is the schema descriptor for metadata field.
 	ledgertransactionDescMetadata := ledgertransactionFields[12].Descriptor()
 	// ledgertransaction.DefaultMetadata holds the default value on creation for the metadata field.

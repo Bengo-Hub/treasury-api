@@ -31,19 +31,19 @@ func (LedgerTransaction) Fields() []ent.Field {
 			Comment("Journal entry identifier"),
 		field.Float("debit_amount").
 			GoType(decimal.Decimal{}).
-			Default(0).
-			Comment("Debit amount"),
+			Optional().
+			Comment("Debit amount (defaults to zero)"),
 		field.Float("credit_amount").
 			GoType(decimal.Decimal{}).
-			Default(0).
-			Comment("Credit amount"),
+			Optional().
+			Comment("Credit amount (defaults to zero)"),
 		field.String("currency").
 			Default("KES").
 			Comment("ISO currency code"),
 		field.Float("exchange_rate").
 			GoType(decimal.Decimal{}).
-			Default(1.0).
-			Comment("FX rate for multi-currency"),
+			Optional().
+			Comment("FX rate for multi-currency (defaults to 1.0)"),
 		field.String("reference_type").
 			Optional().
 			Comment("Reference entity type (invoice, bill, payment)"),
