@@ -9,12 +9,12 @@ import (
 	"github.com/go-chi/cors"
 	"go.uber.org/zap"
 
+	authclient "github.com/Bengo-Hub/shared-auth-client"
 	handlers "github.com/bengobox/treasury-app/internal/http/handlers"
 	sharedmw "github.com/bengobox/treasury-app/internal/shared/middleware"
-	authclient "github.com/Bengo-Hub/shared-auth-client"
 )
 
-func New(log *zap.Logger, health *handlers.Health, ledger *handlers.Ledger, payments *handlers.Payments, authMiddleware *authclient.AuthMiddleware) http.Handler {
+func New(log *zap.Logger, health *handlers.Health, ledger *handlers.Ledger, payments *handlers.Payments, authMiddleware *authclient.AuthMiddleware, userHandler *handlers.UserHandler, rbacHandler *handlers.RBACHandler) http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
@@ -41,13 +41,23 @@ func New(log *zap.Logger, health *handlers.Health, ledger *handlers.Ledger, paym
 	r.Route("/api/v1", func(api chi.Router) {
 		// Serve OpenAPI spec (public, no auth required)
 		api.Get("/openapi.json", handlers.OpenAPIJSON)
-		
+
 		// Apply auth middleware to all v1 routes
 		if authMiddleware != nil {
 			api.Use(authMiddleware.RequireAuth)
 		}
 
 		api.Route("/{tenantID}", func(tenant chi.Router) {
+			// User management routes
+			if userHandler != nil {
+				userHandler.RegisterRoutes(tenant)
+			}
+
+			// RBAC routes
+			if rbacHandler != nil {
+				rbacHandler.RegisterRoutes(tenant)
+			}
+
 			tenant.Route("/ledger", func(ledgerRouter chi.Router) {
 				ledgerRouter.Get("/chart-of-accounts", ledger.ChartOfAccounts)
 			})
