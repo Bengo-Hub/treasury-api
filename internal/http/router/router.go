@@ -14,7 +14,7 @@ import (
 	handlers "github.com/bengobox/treasury-api/internal/http/handlers"
 )
 
-func New(log *zap.Logger, health *handlers.Health, ledger *handlers.Ledger, payments *handlers.Payments, authMiddleware *authclient.AuthMiddleware) http.Handler {
+func New(log *zap.Logger, health *handlers.Health, ledger *handlers.Ledger, payments *handlers.Payments, authMiddleware *authclient.AuthMiddleware, allowedOrigins []string) http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RealIP)
@@ -24,7 +24,7 @@ func New(log *zap.Logger, health *handlers.Health, ledger *handlers.Ledger, paym
 	r.Use(httpware.Recover(log))
 	r.Use(middleware.Timeout(30 * time.Second))
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins:   allowedOrigins,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type", "X-Tenant-ID", "X-Request-ID"},
 		ExposedHeaders:   []string{"Link"},

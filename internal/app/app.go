@@ -87,7 +87,7 @@ func New(ctx context.Context) (*App, error) {
 	ledgerHandler := handlers.NewLedger(log)
 	paymentsHandler := handlers.NewPayments()
 
-	httpRouter := router.New(log, healthHandler, ledgerHandler, paymentsHandler, authMiddleware)
+	httpRouter := router.New(log, healthHandler, ledgerHandler, paymentsHandler, authMiddleware, cfg.HTTP.AllowedOrigins)
 
 	httpServer := &http.Server{
 		Addr:              fmt.Sprintf("%s:%d", cfg.HTTP.Host, cfg.HTTP.Port),
